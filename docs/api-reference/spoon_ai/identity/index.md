@@ -7,18 +7,6 @@ title: spoon_ai.identity
 # Table of Contents
 
 * [spoon\_ai.identity](#spoon_ai.identity)
-* [spoon\_ai.identity.did\_models](#spoon_ai.identity.did_models)
-  * [VerificationMethodType](#spoon_ai.identity.did_models.VerificationMethodType)
-  * [ServiceType](#spoon_ai.identity.did_models.ServiceType)
-  * [VerificationMethod](#spoon_ai.identity.did_models.VerificationMethod)
-  * [ServiceEndpoint](#spoon_ai.identity.did_models.ServiceEndpoint)
-  * [ReputationScore](#spoon_ai.identity.did_models.ReputationScore)
-  * [Attestation](#spoon_ai.identity.did_models.Attestation)
-  * [AgentCard](#spoon_ai.identity.did_models.AgentCard)
-  * [AgentDID](#spoon_ai.identity.did_models.AgentDID)
-    * [to\_did\_document](#spoon_ai.identity.did_models.AgentDID.to_did_document)
-    * [to\_agent\_card](#spoon_ai.identity.did_models.AgentDID.to_agent_card)
-  * [DIDResolutionResult](#spoon_ai.identity.did_models.DIDResolutionResult)
 * [spoon\_ai.identity.storage\_client](#spoon_ai.identity.storage_client)
   * [DIDStorageClient](#spoon_ai.identity.storage_client.DIDStorageClient)
     * [publish\_did\_document](#spoon_ai.identity.storage_client.DIDStorageClient.publish_did_document)
@@ -36,16 +24,28 @@ title: spoon_ai.identity
     * [get\_reputation\_breakdown](#spoon_ai.identity.attestation.TrustScoreCalculator.get_reputation_breakdown)
     * [get\_validation\_breakdown](#spoon_ai.identity.attestation.TrustScoreCalculator.get_validation_breakdown)
 * [spoon\_ai.identity.erc8004\_abi](#spoon_ai.identity.erc8004_abi)
-* [spoon\_ai.identity.did\_resolver](#spoon_ai.identity.did_resolver)
-  * [DIDResolver](#spoon_ai.identity.did_resolver.DIDResolver)
-    * [resolve](#spoon_ai.identity.did_resolver.DIDResolver.resolve)
-    * [resolve\_metadata\_only](#spoon_ai.identity.did_resolver.DIDResolver.resolve_metadata_only)
-    * [verify\_agent](#spoon_ai.identity.did_resolver.DIDResolver.verify_agent)
 * [spoon\_ai.identity.erc8004\_client](#spoon_ai.identity.erc8004_client)
   * [ERC8004Client](#spoon_ai.identity.erc8004_client.ERC8004Client)
     * [get\_agent\_id\_for\_address](#spoon_ai.identity.erc8004_client.ERC8004Client.get_agent_id_for_address)
     * [register\_agent](#spoon_ai.identity.erc8004_client.ERC8004Client.register_agent)
     * [resolve\_agent](#spoon_ai.identity.erc8004_client.ERC8004Client.resolve_agent)
+* [spoon\_ai.identity.did\_resolver](#spoon_ai.identity.did_resolver)
+  * [DIDResolver](#spoon_ai.identity.did_resolver.DIDResolver)
+    * [resolve](#spoon_ai.identity.did_resolver.DIDResolver.resolve)
+    * [resolve\_metadata\_only](#spoon_ai.identity.did_resolver.DIDResolver.resolve_metadata_only)
+    * [verify\_agent](#spoon_ai.identity.did_resolver.DIDResolver.verify_agent)
+* [spoon\_ai.identity.did\_models](#spoon_ai.identity.did_models)
+  * [VerificationMethodType](#spoon_ai.identity.did_models.VerificationMethodType)
+  * [ServiceType](#spoon_ai.identity.did_models.ServiceType)
+  * [VerificationMethod](#spoon_ai.identity.did_models.VerificationMethod)
+  * [ServiceEndpoint](#spoon_ai.identity.did_models.ServiceEndpoint)
+  * [ReputationScore](#spoon_ai.identity.did_models.ReputationScore)
+  * [Attestation](#spoon_ai.identity.did_models.Attestation)
+  * [AgentCard](#spoon_ai.identity.did_models.AgentCard)
+  * [AgentDID](#spoon_ai.identity.did_models.AgentDID)
+    * [to\_did\_document](#spoon_ai.identity.did_models.AgentDID.to_did_document)
+    * [to\_agent\_card](#spoon_ai.identity.did_models.AgentDID.to_agent_card)
+  * [DIDResolutionResult](#spoon_ai.identity.did_models.DIDResolutionResult)
 
 <a id="spoon_ai.identity"></a>
 
@@ -53,124 +53,6 @@ title: spoon_ai.identity
 
 SpoonOS Agent DID Identity Module
 Implements ERC-8004 compliant decentralized identity for agents
-
-<a id="spoon_ai.identity.did_models"></a>
-
-# Module `spoon_ai.identity.did_models`
-
-DID Data Models for SpoonOS Agents
-Following W3C DID Core specification and ERC-8004 standard
-
-<a id="spoon_ai.identity.did_models.VerificationMethodType"></a>
-
-## `VerificationMethodType` Objects
-
-```python
-class VerificationMethodType(str, Enum)
-```
-
-Supported verification method types
-
-<a id="spoon_ai.identity.did_models.ServiceType"></a>
-
-## `ServiceType` Objects
-
-```python
-class ServiceType(str, Enum)
-```
-
-Agent service endpoint types
-
-<a id="spoon_ai.identity.did_models.VerificationMethod"></a>
-
-## `VerificationMethod` Objects
-
-```python
-class VerificationMethod(BaseModel)
-```
-
-Cryptographic verification method for DID authentication
-
-<a id="spoon_ai.identity.did_models.ServiceEndpoint"></a>
-
-## `ServiceEndpoint` Objects
-
-```python
-class ServiceEndpoint(BaseModel)
-```
-
-Service endpoint for agent interaction
-
-<a id="spoon_ai.identity.did_models.ReputationScore"></a>
-
-## `ReputationScore` Objects
-
-```python
-class ReputationScore(BaseModel)
-```
-
-Aggregated reputation score
-
-<a id="spoon_ai.identity.did_models.Attestation"></a>
-
-## `Attestation` Objects
-
-```python
-class Attestation(BaseModel)
-```
-
-Verifiable attestation about an agent
-
-<a id="spoon_ai.identity.did_models.AgentCard"></a>
-
-## `AgentCard` Objects
-
-```python
-class AgentCard(BaseModel)
-```
-
-Agent Card following Google's A2A protocol
-Provides human-readable agent information
-
-<a id="spoon_ai.identity.did_models.AgentDID"></a>
-
-## `AgentDID` Objects
-
-```python
-class AgentDID(BaseModel)
-```
-
-Complete W3C DID Document for SpoonOS Agent
-
-<a id="spoon_ai.identity.did_models.AgentDID.to_did_document"></a>
-
-#### `to_did_document`
-
-```python
-def to_did_document() -> Dict[str, Any]
-```
-
-Export as standard W3C DID Document
-
-<a id="spoon_ai.identity.did_models.AgentDID.to_agent_card"></a>
-
-#### `to_agent_card`
-
-```python
-def to_agent_card() -> Dict[str, Any]
-```
-
-Export agent card separately
-
-<a id="spoon_ai.identity.did_models.DIDResolutionResult"></a>
-
-## `DIDResolutionResult` Objects
-
-```python
-class DIDResolutionResult(BaseModel)
-```
-
-Result of DID resolution
 
 <a id="spoon_ai.identity.storage_client"></a>
 
@@ -384,6 +266,58 @@ Shared ERC-8004 ABI fragments (minimal, artifact-free).
 
 These ABIs cover the common calls used by the Python SDK and demos.
 
+<a id="spoon_ai.identity.erc8004_client"></a>
+
+# Module `spoon_ai.identity.erc8004_client`
+
+ERC-8004 Smart Contract Client
+Handles on-chain interactions with agent registries (IdentityRegistry only)
+
+<a id="spoon_ai.identity.erc8004_client.ERC8004Client"></a>
+
+## `ERC8004Client` Objects
+
+```python
+class ERC8004Client()
+```
+
+Client for interacting with ERC-8004 agent registries
+
+<a id="spoon_ai.identity.erc8004_client.ERC8004Client.get_agent_id_for_address"></a>
+
+#### `get_agent_id_for_address`
+
+```python
+def get_agent_id_for_address(address: str) -> int
+```
+
+Look up the agent ID (ERC-721 token) owned by *address*.
+
+Returns 0 if the address has no registered agent identity.
+
+<a id="spoon_ai.identity.erc8004_client.ERC8004Client.register_agent"></a>
+
+#### `register_agent`
+
+```python
+def register_agent(token_uri: str,
+                   metadata: Optional[List[Tuple[str, bytes]]] = None) -> int
+```
+
+Register agent on IdentityRegistry; returns agentId.
+
+<a id="spoon_ai.identity.erc8004_client.ERC8004Client.resolve_agent"></a>
+
+#### `resolve_agent`
+
+```python
+def resolve_agent(agent_id: int) -> Dict
+```
+
+Resolve agent metadata from IdentityRegistry by agentId.
+
+Returns dict with owner, tokenURI, and common metadata fields.
+
 <a id="spoon_ai.identity.did_resolver"></a>
 
 # Module `spoon_ai.identity.did_resolver`
@@ -441,55 +375,121 @@ def verify_agent(agent_id: int) -> bool
 
 Verify agent exists and is resolvable
 
-<a id="spoon_ai.identity.erc8004_client"></a>
+<a id="spoon_ai.identity.did_models"></a>
 
-# Module `spoon_ai.identity.erc8004_client`
+# Module `spoon_ai.identity.did_models`
 
-ERC-8004 Smart Contract Client
-Handles on-chain interactions with agent registries (IdentityRegistry only)
+DID Data Models for SpoonOS Agents
+Following W3C DID Core specification and ERC-8004 standard
 
-<a id="spoon_ai.identity.erc8004_client.ERC8004Client"></a>
+<a id="spoon_ai.identity.did_models.VerificationMethodType"></a>
 
-## `ERC8004Client` Objects
-
-```python
-class ERC8004Client()
-```
-
-Client for interacting with ERC-8004 agent registries
-
-<a id="spoon_ai.identity.erc8004_client.ERC8004Client.get_agent_id_for_address"></a>
-
-#### `get_agent_id_for_address`
+## `VerificationMethodType` Objects
 
 ```python
-def get_agent_id_for_address(address: str) -> int
+class VerificationMethodType(str, Enum)
 ```
 
-Look up the agent ID (ERC-721 token) owned by *address*.
+Supported verification method types
 
-Returns 0 if the address has no registered agent identity.
+<a id="spoon_ai.identity.did_models.ServiceType"></a>
 
-<a id="spoon_ai.identity.erc8004_client.ERC8004Client.register_agent"></a>
-
-#### `register_agent`
+## `ServiceType` Objects
 
 ```python
-def register_agent(token_uri: str,
-                   metadata: Optional[List[Tuple[str, bytes]]] = None) -> int
+class ServiceType(str, Enum)
 ```
 
-Register agent on IdentityRegistry; returns agentId.
+Agent service endpoint types
 
-<a id="spoon_ai.identity.erc8004_client.ERC8004Client.resolve_agent"></a>
+<a id="spoon_ai.identity.did_models.VerificationMethod"></a>
 
-#### `resolve_agent`
+## `VerificationMethod` Objects
 
 ```python
-def resolve_agent(agent_id: int) -> Dict
+class VerificationMethod(BaseModel)
 ```
 
-Resolve agent metadata from IdentityRegistry by agentId.
+Cryptographic verification method for DID authentication
 
-Returns dict with owner, tokenURI, and common metadata fields.
+<a id="spoon_ai.identity.did_models.ServiceEndpoint"></a>
+
+## `ServiceEndpoint` Objects
+
+```python
+class ServiceEndpoint(BaseModel)
+```
+
+Service endpoint for agent interaction
+
+<a id="spoon_ai.identity.did_models.ReputationScore"></a>
+
+## `ReputationScore` Objects
+
+```python
+class ReputationScore(BaseModel)
+```
+
+Aggregated reputation score
+
+<a id="spoon_ai.identity.did_models.Attestation"></a>
+
+## `Attestation` Objects
+
+```python
+class Attestation(BaseModel)
+```
+
+Verifiable attestation about an agent
+
+<a id="spoon_ai.identity.did_models.AgentCard"></a>
+
+## `AgentCard` Objects
+
+```python
+class AgentCard(BaseModel)
+```
+
+Agent Card following Google's A2A protocol
+Provides human-readable agent information
+
+<a id="spoon_ai.identity.did_models.AgentDID"></a>
+
+## `AgentDID` Objects
+
+```python
+class AgentDID(BaseModel)
+```
+
+Complete W3C DID Document for SpoonOS Agent
+
+<a id="spoon_ai.identity.did_models.AgentDID.to_did_document"></a>
+
+#### `to_did_document`
+
+```python
+def to_did_document() -> Dict[str, Any]
+```
+
+Export as standard W3C DID Document
+
+<a id="spoon_ai.identity.did_models.AgentDID.to_agent_card"></a>
+
+#### `to_agent_card`
+
+```python
+def to_agent_card() -> Dict[str, Any]
+```
+
+Export agent card separately
+
+<a id="spoon_ai.identity.did_models.DIDResolutionResult"></a>
+
+## `DIDResolutionResult` Objects
+
+```python
+class DIDResolutionResult(BaseModel)
+```
+
+Result of DID resolution
 

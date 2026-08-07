@@ -52,12 +52,12 @@ title: spoon_ai.memory
     * [after\_agent](#spoon_ai.memory.checkpointer.CheckpointMiddleware.after_agent)
   * [create\_sqlite\_checkpointer](#spoon_ai.memory.checkpointer.create_sqlite_checkpointer)
   * [create\_memory\_checkpointer](#spoon_ai.memory.checkpointer.create_memory_checkpointer)
-* [spoon\_ai.memory.remove\_message](#spoon_ai.memory.remove_message)
-  * [RemoveMessage](#spoon_ai.memory.remove_message.RemoveMessage)
 * [spoon\_ai.memory.mem0\_client](#spoon_ai.memory.mem0_client)
   * [SpoonMem0](#spoon_ai.memory.mem0_client.SpoonMem0)
     * [add\_text](#spoon_ai.memory.mem0_client.SpoonMem0.add_text)
     * [get\_all\_memory](#spoon_ai.memory.mem0_client.SpoonMem0.get_all_memory)
+* [spoon\_ai.memory.remove\_message](#spoon_ai.memory.remove_message)
+  * [RemoveMessage](#spoon_ai.memory.remove_message.RemoveMessage)
 * [spoon\_ai.memory.utils](#spoon_ai.memory.utils)
   * [extract\_memories](#spoon_ai.memory.utils.extract_memories)
   * [extract\_first\_memory\_id](#spoon_ai.memory.utils.extract_first_memory_id)
@@ -633,22 +633,6 @@ Create an in-memory checkpointer for testing.
 
   InMemoryCheckpointer instance
 
-<a id="spoon_ai.memory.remove_message"></a>
-
-# Module `spoon_ai.memory.remove_message`
-
-Helpers for emitting message-removal directives.
-
-<a id="spoon_ai.memory.remove_message.RemoveMessage"></a>
-
-## `RemoveMessage` Objects
-
-```python
-class RemoveMessage(BaseModel)
-```
-
-Lightweight message that signals another message should be removed.
-
 <a id="spoon_ai.memory.mem0_client"></a>
 
 # Module `spoon_ai.memory.mem0_client`
@@ -685,6 +669,22 @@ def get_all_memory(user_id: Optional[str] = None,
 ```
 
 Retrieve all memories for a user (subject to backend limits).
+
+<a id="spoon_ai.memory.remove_message"></a>
+
+# Module `spoon_ai.memory.remove_message`
+
+Helpers for emitting message-removal directives.
+
+<a id="spoon_ai.memory.remove_message.RemoveMessage"></a>
+
+## `RemoveMessage` Objects
+
+```python
+class RemoveMessage(BaseModel)
+```
+
+Lightweight message that signals another message should be removed.
 
 <a id="spoon_ai.memory.utils"></a>
 

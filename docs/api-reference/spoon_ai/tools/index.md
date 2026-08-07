@@ -7,9 +7,12 @@ title: spoon_ai.tools
 # Table of Contents
 
 * [spoon\_ai.tools](#spoon_ai.tools)
-* [spoon\_ai.tools.x402\_payment](#spoon_ai.tools.x402_payment)
-  * [X402PaymentHeaderTool](#spoon_ai.tools.x402_payment.X402PaymentHeaderTool)
-  * [X402PaywalledRequestTool](#spoon_ai.tools.x402_payment.X402PaywalledRequestTool)
+* [spoon\_ai.tools.tool\_manager](#spoon_ai.tools.tool_manager)
+  * [ToolManager](#spoon_ai.tools.tool_manager.ToolManager)
+    * [reindex](#spoon_ai.tools.tool_manager.ToolManager.reindex)
+* [spoon\_ai.tools.base](#spoon_ai.tools.base)
+  * [reset\_secrets\_initialization](#spoon_ai.tools.base.reset_secrets_initialization)
+  * [ToolFailure](#spoon_ai.tools.base.ToolFailure)
 * [spoon\_ai.tools.neofs\_tools](#spoon_ai.tools.neofs_tools)
   * [get\_shared\_neofs\_client](#spoon_ai.tools.neofs_tools.get_shared_neofs_client)
   * [CreateBearerTokenTool](#spoon_ai.tools.neofs_tools.CreateBearerTokenTool)
@@ -28,9 +31,14 @@ title: spoon_ai.tools
   * [DeleteContainerTool](#spoon_ai.tools.neofs_tools.DeleteContainerTool)
   * [GetNetworkInfoTool](#spoon_ai.tools.neofs_tools.GetNetworkInfoTool)
   * [GetBalanceTool](#spoon_ai.tools.neofs_tools.GetBalanceTool)
-* [spoon\_ai.tools.tool\_manager](#spoon_ai.tools.tool_manager)
-  * [ToolManager](#spoon_ai.tools.tool_manager.ToolManager)
-    * [reindex](#spoon_ai.tools.tool_manager.ToolManager.reindex)
+* [spoon\_ai.tools.x402\_payment](#spoon_ai.tools.x402_payment)
+  * [X402PaymentHeaderTool](#spoon_ai.tools.x402_payment.X402PaymentHeaderTool)
+  * [X402PaywalledRequestTool](#spoon_ai.tools.x402_payment.X402PaywalledRequestTool)
+* [spoon\_ai.tools.mcp\_tool](#spoon_ai.tools.mcp_tool)
+  * [MCPTool](#spoon_ai.tools.mcp_tool.MCPTool)
+    * [call\_mcp\_tool](#spoon_ai.tools.mcp_tool.MCPTool.call_mcp_tool)
+    * [expand\_server\_tools](#spoon_ai.tools.mcp_tool.MCPTool.expand_server_tools)
+    * [list\_available\_tools](#spoon_ai.tools.mcp_tool.MCPTool.list_available_tools)
 * [spoon\_ai.tools.hitl](#spoon_ai.tools.hitl)
   * [InterruptOnConfig](#spoon_ai.tools.hitl.InterruptOnConfig)
   * [ApprovalDecision](#spoon_ai.tools.hitl.ApprovalDecision)
@@ -82,11 +90,6 @@ title: spoon_ai.tools
   * [create\_hitl\_middleware](#spoon_ai.tools.hitl.create_hitl_middleware)
   * [format\_tool\_call\_description](#spoon_ai.tools.hitl.format_tool_call_description)
 * [spoon\_ai.tools.rag\_tools](#spoon_ai.tools.rag_tools)
-* [spoon\_ai.tools.mcp\_tool](#spoon_ai.tools.mcp_tool)
-  * [MCPTool](#spoon_ai.tools.mcp_tool.MCPTool)
-    * [call\_mcp\_tool](#spoon_ai.tools.mcp_tool.MCPTool.call_mcp_tool)
-    * [expand\_server\_tools](#spoon_ai.tools.mcp_tool.MCPTool.expand_server_tools)
-    * [list\_available\_tools](#spoon_ai.tools.mcp_tool.MCPTool.list_available_tools)
 * [spoon\_ai.tools.turnkey\_tools](#spoon_ai.tools.turnkey_tools)
   * [TurnkeyBaseTool](#spoon_ai.tools.turnkey_tools.TurnkeyBaseTool)
     * [client](#spoon_ai.tools.turnkey_tools.TurnkeyBaseTool.client)
@@ -123,37 +126,56 @@ title: spoon_ai.tools
   * [CompleteTransactionWorkflowTool](#spoon_ai.tools.turnkey_tools.CompleteTransactionWorkflowTool)
     * [execute](#spoon_ai.tools.turnkey_tools.CompleteTransactionWorkflowTool.execute)
   * [get\_turnkey\_tools](#spoon_ai.tools.turnkey_tools.get_turnkey_tools)
-* [spoon\_ai.tools.base](#spoon_ai.tools.base)
-  * [reset\_secrets\_initialization](#spoon_ai.tools.base.reset_secrets_initialization)
-  * [ToolFailure](#spoon_ai.tools.base.ToolFailure)
 
 <a id="spoon_ai.tools"></a>
 
 # Module `spoon_ai.tools`
 
-<a id="spoon_ai.tools.x402_payment"></a>
+<a id="spoon_ai.tools.tool_manager"></a>
 
-# Module `spoon_ai.tools.x402_payment`
+# Module `spoon_ai.tools.tool_manager`
 
-<a id="spoon_ai.tools.x402_payment.X402PaymentHeaderTool"></a>
+<a id="spoon_ai.tools.tool_manager.ToolManager"></a>
 
-## `X402PaymentHeaderTool` Objects
-
-```python
-class X402PaymentHeaderTool(BaseTool)
-```
-
-Create a signed X-PAYMENT header for a given resource.
-
-<a id="spoon_ai.tools.x402_payment.X402PaywalledRequestTool"></a>
-
-## `X402PaywalledRequestTool` Objects
+## `ToolManager` Objects
 
 ```python
-class X402PaywalledRequestTool(BaseTool)
+class ToolManager()
 ```
 
-Fetch a paywalled resource, handling the x402 402 negotiation automatically.
+<a id="spoon_ai.tools.tool_manager.ToolManager.reindex"></a>
+
+#### `reindex`
+
+```python
+def reindex() -> None
+```
+
+Rebuild the internal name-&gt;tool mapping. Useful if tools have been renamed dynamically.
+
+<a id="spoon_ai.tools.base"></a>
+
+# Module `spoon_ai.tools.base`
+
+<a id="spoon_ai.tools.base.reset_secrets_initialization"></a>
+
+#### `reset_secrets_initialization`
+
+```python
+def reset_secrets_initialization() -> None
+```
+
+Reset the initialization flag. Useful for testing.
+
+<a id="spoon_ai.tools.base.ToolFailure"></a>
+
+## `ToolFailure` Objects
+
+```python
+class ToolFailure(Exception)
+```
+
+Exception to indicate a tool execution failure.
 
 <a id="spoon_ai.tools.neofs_tools"></a>
 
@@ -338,27 +360,80 @@ class GetBalanceTool(BaseTool)
 
 Get balance for an address
 
-<a id="spoon_ai.tools.tool_manager"></a>
+<a id="spoon_ai.tools.x402_payment"></a>
 
-# Module `spoon_ai.tools.tool_manager`
+# Module `spoon_ai.tools.x402_payment`
 
-<a id="spoon_ai.tools.tool_manager.ToolManager"></a>
+<a id="spoon_ai.tools.x402_payment.X402PaymentHeaderTool"></a>
 
-## `ToolManager` Objects
-
-```python
-class ToolManager()
-```
-
-<a id="spoon_ai.tools.tool_manager.ToolManager.reindex"></a>
-
-#### `reindex`
+## `X402PaymentHeaderTool` Objects
 
 ```python
-def reindex() -> None
+class X402PaymentHeaderTool(BaseTool)
 ```
 
-Rebuild the internal name-&gt;tool mapping. Useful if tools have been renamed dynamically.
+Create a signed X-PAYMENT header for a given resource.
+
+<a id="spoon_ai.tools.x402_payment.X402PaywalledRequestTool"></a>
+
+## `X402PaywalledRequestTool` Objects
+
+```python
+class X402PaywalledRequestTool(BaseTool)
+```
+
+Fetch a paywalled resource, handling the x402 402 negotiation automatically.
+
+<a id="spoon_ai.tools.mcp_tool"></a>
+
+# Module `spoon_ai.tools.mcp_tool`
+
+<a id="spoon_ai.tools.mcp_tool.MCPTool"></a>
+
+## `MCPTool` Objects
+
+```python
+class MCPTool(BaseTool, MCPClientMixin)
+```
+
+<a id="spoon_ai.tools.mcp_tool.MCPTool.call_mcp_tool"></a>
+
+#### `call_mcp_tool`
+
+```python
+async def call_mcp_tool(tool_name: str, **kwargs)
+```
+
+Override the mixin method to add tool-specific error handling.
+
+<a id="spoon_ai.tools.mcp_tool.MCPTool.expand_server_tools"></a>
+
+#### `expand_server_tools`
+
+```python
+async def expand_server_tools() -> List["MCPTool"]
+```
+
+Expand this single MCPTool (one-per-server) into one MCPTool per
+real server tool.  Each returned tool shares the same MCP transport
+config and delegates execution to ``call_mcp_tool(real_name)``.
+
+If the server is unreachable or returns no tools, an empty list is
+returned (callers should keep the original proxy as fallback).
+
+**Returns**:
+
+  List of MCPTool instances, one per discovered server tool.
+
+<a id="spoon_ai.tools.mcp_tool.MCPTool.list_available_tools"></a>
+
+#### `list_available_tools`
+
+```python
+async def list_available_tools() -> list
+```
+
+List available tools from the MCP server.
 
 <a id="spoon_ai.tools.hitl"></a>
 
@@ -1187,57 +1262,6 @@ Can be used as a base for custom description functions.
 
 # Module `spoon_ai.tools.rag_tools`
 
-<a id="spoon_ai.tools.mcp_tool"></a>
-
-# Module `spoon_ai.tools.mcp_tool`
-
-<a id="spoon_ai.tools.mcp_tool.MCPTool"></a>
-
-## `MCPTool` Objects
-
-```python
-class MCPTool(BaseTool, MCPClientMixin)
-```
-
-<a id="spoon_ai.tools.mcp_tool.MCPTool.call_mcp_tool"></a>
-
-#### `call_mcp_tool`
-
-```python
-async def call_mcp_tool(tool_name: str, **kwargs)
-```
-
-Override the mixin method to add tool-specific error handling.
-
-<a id="spoon_ai.tools.mcp_tool.MCPTool.expand_server_tools"></a>
-
-#### `expand_server_tools`
-
-```python
-async def expand_server_tools() -> List["MCPTool"]
-```
-
-Expand this single MCPTool (one-per-server) into one MCPTool per
-real server tool.  Each returned tool shares the same MCP transport
-config and delegates execution to ``call_mcp_tool(real_name)``.
-
-If the server is unreachable or returns no tools, an empty list is
-returned (callers should keep the original proxy as fallback).
-
-**Returns**:
-
-  List of MCPTool instances, one per discovered server tool.
-
-<a id="spoon_ai.tools.mcp_tool.MCPTool.list_available_tools"></a>
-
-#### `list_available_tools`
-
-```python
-async def list_available_tools() -> list
-```
-
-List available tools from the MCP server.
-
 <a id="spoon_ai.tools.turnkey_tools"></a>
 
 # Module `spoon_ai.tools.turnkey_tools`
@@ -1636,28 +1660,4 @@ def get_turnkey_tools() -> List[BaseTool]
 ```
 
 Get all Turnkey tools
-
-<a id="spoon_ai.tools.base"></a>
-
-# Module `spoon_ai.tools.base`
-
-<a id="spoon_ai.tools.base.reset_secrets_initialization"></a>
-
-#### `reset_secrets_initialization`
-
-```python
-def reset_secrets_initialization() -> None
-```
-
-Reset the initialization flag. Useful for testing.
-
-<a id="spoon_ai.tools.base.ToolFailure"></a>
-
-## `ToolFailure` Objects
-
-```python
-class ToolFailure(Exception)
-```
-
-Exception to indicate a tool execution failure.
 
