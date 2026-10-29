@@ -7,15 +7,6 @@ title: spoon_ai.middleware
 # Table of Contents
 
 * [spoon\_ai.middleware](#spoon_ai.middleware)
-* [spoon\_ai.middleware.prompt\_caching](#spoon_ai.middleware.prompt_caching)
-  * [is\_anthropic\_model](#spoon_ai.middleware.prompt_caching.is_anthropic_model)
-  * [add\_cache\_control](#spoon_ai.middleware.prompt_caching.add_cache_control)
-  * [should\_cache\_content](#spoon_ai.middleware.prompt_caching.should_cache_content)
-  * [AnthropicPromptCachingMiddleware](#spoon_ai.middleware.prompt_caching.AnthropicPromptCachingMiddleware)
-    * [\_\_init\_\_](#spoon_ai.middleware.prompt_caching.AnthropicPromptCachingMiddleware.__init__)
-    * [awrap\_model\_call](#spoon_ai.middleware.prompt_caching.AnthropicPromptCachingMiddleware.awrap_model_call)
-    * [get\_stats](#spoon_ai.middleware.prompt_caching.AnthropicPromptCachingMiddleware.get_stats)
-  * [create\_prompt\_caching\_middleware](#spoon_ai.middleware.prompt_caching.create_prompt_caching_middleware)
 * [spoon\_ai.middleware.filesystem](#spoon_ai.middleware.filesystem)
   * [validate\_path](#spoon_ai.middleware.filesystem.validate_path)
   * [LsTool](#spoon_ai.middleware.filesystem.LsTool)
@@ -38,6 +29,15 @@ title: spoon_ai.middleware
   * [LocalSandboxBackend](#spoon_ai.middleware.filesystem.LocalSandboxBackend)
     * [execute](#spoon_ai.middleware.filesystem.LocalSandboxBackend.execute)
     * [aexecute](#spoon_ai.middleware.filesystem.LocalSandboxBackend.aexecute)
+* [spoon\_ai.middleware.prompt\_caching](#spoon_ai.middleware.prompt_caching)
+  * [is\_anthropic\_model](#spoon_ai.middleware.prompt_caching.is_anthropic_model)
+  * [add\_cache\_control](#spoon_ai.middleware.prompt_caching.add_cache_control)
+  * [should\_cache\_content](#spoon_ai.middleware.prompt_caching.should_cache_content)
+  * [AnthropicPromptCachingMiddleware](#spoon_ai.middleware.prompt_caching.AnthropicPromptCachingMiddleware)
+    * [\_\_init\_\_](#spoon_ai.middleware.prompt_caching.AnthropicPromptCachingMiddleware.__init__)
+    * [awrap\_model\_call](#spoon_ai.middleware.prompt_caching.AnthropicPromptCachingMiddleware.awrap_model_call)
+    * [get\_stats](#spoon_ai.middleware.prompt_caching.AnthropicPromptCachingMiddleware.get_stats)
+  * [create\_prompt\_caching\_middleware](#spoon_ai.middleware.prompt_caching.create_prompt_caching_middleware)
 * [spoon\_ai.middleware.todolist](#spoon_ai.middleware.todolist)
   * [TodoStatus](#spoon_ai.middleware.todolist.TodoStatus)
   * [TodoItem](#spoon_ai.middleware.todolist.TodoItem)
@@ -80,25 +80,6 @@ title: spoon_ai.middleware
     * [get\_current\_plan](#spoon_ai.middleware.planning.PlanningMiddleware.get_current_plan)
     * [set\_plan](#spoon_ai.middleware.planning.PlanningMiddleware.set_plan)
   * [create\_planning\_middleware](#spoon_ai.middleware.planning.create_planning_middleware)
-* [spoon\_ai.middleware.summarization](#spoon_ai.middleware.summarization)
-  * [ContextFraction](#spoon_ai.middleware.summarization.ContextFraction)
-  * [ContextTokens](#spoon_ai.middleware.summarization.ContextTokens)
-  * [ContextMessages](#spoon_ai.middleware.summarization.ContextMessages)
-  * [ContextSize](#spoon_ai.middleware.summarization.ContextSize)
-  * [count\_tokens\_approximately](#spoon_ai.middleware.summarization.count_tokens_approximately)
-  * [RemoveMessage](#spoon_ai.middleware.summarization.RemoveMessage)
-  * [SummarizationMiddleware](#spoon_ai.middleware.summarization.SummarizationMiddleware)
-    * [\_\_init\_\_](#spoon_ai.middleware.summarization.SummarizationMiddleware.__init__)
-    * [awrap\_model\_call](#spoon_ai.middleware.summarization.SummarizationMiddleware.awrap_model_call)
-    * [get\_stats](#spoon_ai.middleware.summarization.SummarizationMiddleware.get_stats)
-  * [create\_summarization\_middleware](#spoon_ai.middleware.summarization.create_summarization_middleware)
-* [spoon\_ai.middleware.patch\_tool\_calls](#spoon_ai.middleware.patch_tool_calls)
-  * [PatchToolCallsMiddleware](#spoon_ai.middleware.patch_tool_calls.PatchToolCallsMiddleware)
-    * [\_\_init\_\_](#spoon_ai.middleware.patch_tool_calls.PatchToolCallsMiddleware.__init__)
-    * [before\_agent](#spoon_ai.middleware.patch_tool_calls.PatchToolCallsMiddleware.before_agent)
-    * [awrap\_model\_call](#spoon_ai.middleware.patch_tool_calls.PatchToolCallsMiddleware.awrap_model_call)
-    * [get\_stats](#spoon_ai.middleware.patch_tool_calls.PatchToolCallsMiddleware.get_stats)
-  * [create\_patch\_tool\_calls\_middleware](#spoon_ai.middleware.patch_tool_calls.create_patch_tool_calls_middleware)
 * [spoon\_ai.middleware.base](#spoon_ai.middleware.base)
   * [AgentPhase](#spoon_ai.middleware.base.AgentPhase)
     * [PLAN](#spoon_ai.middleware.base.AgentPhase.PLAN)
@@ -152,6 +133,25 @@ title: spoon_ai.middleware
     * [collect\_tools](#spoon_ai.middleware.base.MiddlewarePipeline.collect_tools)
     * [build\_system\_prompt](#spoon_ai.middleware.base.MiddlewarePipeline.build_system_prompt)
   * [create\_middleware\_pipeline](#spoon_ai.middleware.base.create_middleware_pipeline)
+* [spoon\_ai.middleware.summarization](#spoon_ai.middleware.summarization)
+  * [ContextFraction](#spoon_ai.middleware.summarization.ContextFraction)
+  * [ContextTokens](#spoon_ai.middleware.summarization.ContextTokens)
+  * [ContextMessages](#spoon_ai.middleware.summarization.ContextMessages)
+  * [ContextSize](#spoon_ai.middleware.summarization.ContextSize)
+  * [count\_tokens\_approximately](#spoon_ai.middleware.summarization.count_tokens_approximately)
+  * [RemoveMessage](#spoon_ai.middleware.summarization.RemoveMessage)
+  * [SummarizationMiddleware](#spoon_ai.middleware.summarization.SummarizationMiddleware)
+    * [\_\_init\_\_](#spoon_ai.middleware.summarization.SummarizationMiddleware.__init__)
+    * [awrap\_model\_call](#spoon_ai.middleware.summarization.SummarizationMiddleware.awrap_model_call)
+    * [get\_stats](#spoon_ai.middleware.summarization.SummarizationMiddleware.get_stats)
+  * [create\_summarization\_middleware](#spoon_ai.middleware.summarization.create_summarization_middleware)
+* [spoon\_ai.middleware.patch\_tool\_calls](#spoon_ai.middleware.patch_tool_calls)
+  * [PatchToolCallsMiddleware](#spoon_ai.middleware.patch_tool_calls.PatchToolCallsMiddleware)
+    * [\_\_init\_\_](#spoon_ai.middleware.patch_tool_calls.PatchToolCallsMiddleware.__init__)
+    * [before\_agent](#spoon_ai.middleware.patch_tool_calls.PatchToolCallsMiddleware.before_agent)
+    * [awrap\_model\_call](#spoon_ai.middleware.patch_tool_calls.PatchToolCallsMiddleware.awrap_model_call)
+    * [get\_stats](#spoon_ai.middleware.patch_tool_calls.PatchToolCallsMiddleware.get_stats)
+  * [create\_patch\_tool\_calls\_middleware](#spoon_ai.middleware.patch_tool_calls.create_patch_tool_calls_middleware)
 
 <a id="spoon_ai.middleware"></a>
 
@@ -169,203 +169,6 @@ Provides flexible middleware architecture for:
 - Context summarization
 - Dangling tool call patching
 - Anthropic prompt caching
-
-<a id="spoon_ai.middleware.prompt_caching"></a>
-
-# Module `spoon_ai.middleware.prompt_caching`
-
-Anthropic Prompt Caching Middleware.
-
-Adds cache_control markers to system prompts and messages for Anthropic models,
-enabling prompt caching to reduce costs and latency for repeated content.
-
-How Anthropic Prompt Caching Works:
-- Content marked with cache_control: &#123;"type": "ephemeral"&#125; is cached for ~5 minutes
-- Subsequent requests within the cache window reuse the cached content
-- This reduces input token costs and speeds up responses
-- Only works with Claude models (claude-3-*, claude-2-*, etc.)
-
-Compatible with LangChain DeepAgents AnthropicPromptCachingMiddleware interface.
-
-Usage:
-    from spoon_ai.middleware.prompt_caching import AnthropicPromptCachingMiddleware
-
-    agent = ToolCallAgent(
-        middleware=[AnthropicPromptCachingMiddleware()],
-        ...
-    )
-
-<a id="spoon_ai.middleware.prompt_caching.is_anthropic_model"></a>
-
-#### `is_anthropic_model`
-
-```python
-def is_anthropic_model(model_name: Optional[str]) -> bool
-```
-
-Check if a model name indicates an Anthropic Claude model.
-
-**Arguments**:
-
-- `model_name` - Model identifier string
-  
-
-**Returns**:
-
-  True if this is an Anthropic model that supports caching
-
-<a id="spoon_ai.middleware.prompt_caching.add_cache_control"></a>
-
-#### `add_cache_control`
-
-```python
-def add_cache_control(content: Any) -> Any
-```
-
-Add cache_control marker to content.
-
-Anthropic expects content to be a list of content blocks, where each
-block can have a cache_control field.
-
-**Arguments**:
-
-- `content` - Content to add cache control to (string or list of blocks)
-  
-
-**Returns**:
-
-  Content with cache_control added
-
-<a id="spoon_ai.middleware.prompt_caching.should_cache_content"></a>
-
-#### `should_cache_content`
-
-```python
-def should_cache_content(content: Any) -> bool
-```
-
-Determine if content is worth caching based on length.
-
-**Arguments**:
-
-- `content` - Content to evaluate
-  
-
-**Returns**:
-
-  True if content should be cached
-
-<a id="spoon_ai.middleware.prompt_caching.AnthropicPromptCachingMiddleware"></a>
-
-## `AnthropicPromptCachingMiddleware` Objects
-
-```python
-class AnthropicPromptCachingMiddleware(AgentMiddleware)
-```
-
-Middleware that adds cache control markers for Anthropic prompt caching.
-
-When using Anthropic Claude models, this middleware:
-1. Adds cache_control to system prompts (if long enough)
-2. Optionally adds cache_control to tool definitions
-3. Skips caching for non-Anthropic models
-
-Benefits:
-- Reduces input token costs for repeated content
-- Speeds up response time for cached prompts
-- Automatic cache invalidation after ~5 minutes
-
-**Example**:
-
-    ```python
-    from spoon_ai.middleware.prompt_caching import AnthropicPromptCachingMiddleware
-
-    # Basic usage - caches system prompt
-    middleware = AnthropicPromptCachingMiddleware()
-
-    # With options
-    middleware = AnthropicPromptCachingMiddleware(
-        cache_system_prompt=True,
-        cache_tools=True,
-        min_cache_length=1024,
-        unsupported_model_behavior="ignore",  # or "warn"
-    )
-
-    agent = ToolCallAgent(
-        middleware=[middleware],
-        ...
-    )
-    ```
-
-<a id="spoon_ai.middleware.prompt_caching.AnthropicPromptCachingMiddleware.__init__"></a>
-
-#### `__init__`
-
-```python
-def __init__(cache_system_prompt: bool = True,
-             cache_tools: bool = True,
-             min_cache_length: int = MIN_CACHE_LENGTH,
-             unsupported_model_behavior: Literal["ignore", "warn"] = "ignore")
-```
-
-Initialize Anthropic prompt caching middleware.
-
-**Arguments**:
-
-- `cache_system_prompt` - Whether to cache the system prompt (default: True)
-- `cache_tools` - Whether to cache tool definitions (default: True)
-- `min_cache_length` - Minimum content length to cache (default: 1024 chars)
-- `unsupported_model_behavior` - What to do for non-Anthropic models:
-  - "ignore": Silently skip caching
-  - "warn": Log a warning and skip caching
-
-<a id="spoon_ai.middleware.prompt_caching.AnthropicPromptCachingMiddleware.awrap_model_call"></a>
-
-#### `awrap_model_call`
-
-```python
-async def awrap_model_call(request: ModelRequest,
-                           handler: Callable) -> ModelResponse
-```
-
-Add cache control markers before model call.
-
-<a id="spoon_ai.middleware.prompt_caching.AnthropicPromptCachingMiddleware.get_stats"></a>
-
-#### `get_stats`
-
-```python
-def get_stats() -> Dict[str, int]
-```
-
-Get caching statistics.
-
-<a id="spoon_ai.middleware.prompt_caching.create_prompt_caching_middleware"></a>
-
-#### `create_prompt_caching_middleware`
-
-```python
-def create_prompt_caching_middleware(
-    cache_system_prompt: bool = True,
-    cache_tools: bool = True,
-    min_cache_length: int = MIN_CACHE_LENGTH,
-    unsupported_model_behavior: Literal["ignore", "warn"] = "ignore"
-) -> AnthropicPromptCachingMiddleware
-```
-
-Create an Anthropic prompt caching middleware.
-
-**Arguments**:
-
-- `cache_system_prompt` - Whether to cache system prompts
-- `cache_tools` - Whether to cache tool definitions
-- `min_cache_length` - Minimum content length to cache
-- `unsupported_model_behavior` - How to handle non-Anthropic models
-  
-
-**Returns**:
-
-  Configured AnthropicPromptCachingMiddleware
 
 <a id="spoon_ai.middleware.filesystem"></a>
 
@@ -713,6 +516,203 @@ async def aexecute(command: str) -> ExecuteResponse
 ```
 
 Async execute a shell command.
+
+<a id="spoon_ai.middleware.prompt_caching"></a>
+
+# Module `spoon_ai.middleware.prompt_caching`
+
+Anthropic Prompt Caching Middleware.
+
+Adds cache_control markers to system prompts and messages for Anthropic models,
+enabling prompt caching to reduce costs and latency for repeated content.
+
+How Anthropic Prompt Caching Works:
+- Content marked with cache_control: &#123;"type": "ephemeral"&#125; is cached for ~5 minutes
+- Subsequent requests within the cache window reuse the cached content
+- This reduces input token costs and speeds up responses
+- Only works with Claude models (claude-3-*, claude-2-*, etc.)
+
+Compatible with LangChain DeepAgents AnthropicPromptCachingMiddleware interface.
+
+Usage:
+    from spoon_ai.middleware.prompt_caching import AnthropicPromptCachingMiddleware
+
+    agent = ToolCallAgent(
+        middleware=[AnthropicPromptCachingMiddleware()],
+        ...
+    )
+
+<a id="spoon_ai.middleware.prompt_caching.is_anthropic_model"></a>
+
+#### `is_anthropic_model`
+
+```python
+def is_anthropic_model(model_name: Optional[str]) -> bool
+```
+
+Check if a model name indicates an Anthropic Claude model.
+
+**Arguments**:
+
+- `model_name` - Model identifier string
+  
+
+**Returns**:
+
+  True if this is an Anthropic model that supports caching
+
+<a id="spoon_ai.middleware.prompt_caching.add_cache_control"></a>
+
+#### `add_cache_control`
+
+```python
+def add_cache_control(content: Any) -> Any
+```
+
+Add cache_control marker to content.
+
+Anthropic expects content to be a list of content blocks, where each
+block can have a cache_control field.
+
+**Arguments**:
+
+- `content` - Content to add cache control to (string or list of blocks)
+  
+
+**Returns**:
+
+  Content with cache_control added
+
+<a id="spoon_ai.middleware.prompt_caching.should_cache_content"></a>
+
+#### `should_cache_content`
+
+```python
+def should_cache_content(content: Any) -> bool
+```
+
+Determine if content is worth caching based on length.
+
+**Arguments**:
+
+- `content` - Content to evaluate
+  
+
+**Returns**:
+
+  True if content should be cached
+
+<a id="spoon_ai.middleware.prompt_caching.AnthropicPromptCachingMiddleware"></a>
+
+## `AnthropicPromptCachingMiddleware` Objects
+
+```python
+class AnthropicPromptCachingMiddleware(AgentMiddleware)
+```
+
+Middleware that adds cache control markers for Anthropic prompt caching.
+
+When using Anthropic Claude models, this middleware:
+1. Adds cache_control to system prompts (if long enough)
+2. Optionally adds cache_control to tool definitions
+3. Skips caching for non-Anthropic models
+
+Benefits:
+- Reduces input token costs for repeated content
+- Speeds up response time for cached prompts
+- Automatic cache invalidation after ~5 minutes
+
+**Example**:
+
+    ```python
+    from spoon_ai.middleware.prompt_caching import AnthropicPromptCachingMiddleware
+
+    # Basic usage - caches system prompt
+    middleware = AnthropicPromptCachingMiddleware()
+
+    # With options
+    middleware = AnthropicPromptCachingMiddleware(
+        cache_system_prompt=True,
+        cache_tools=True,
+        min_cache_length=1024,
+        unsupported_model_behavior="ignore",  # or "warn"
+    )
+
+    agent = ToolCallAgent(
+        middleware=[middleware],
+        ...
+    )
+    ```
+
+<a id="spoon_ai.middleware.prompt_caching.AnthropicPromptCachingMiddleware.__init__"></a>
+
+#### `__init__`
+
+```python
+def __init__(cache_system_prompt: bool = True,
+             cache_tools: bool = True,
+             min_cache_length: int = MIN_CACHE_LENGTH,
+             unsupported_model_behavior: Literal["ignore", "warn"] = "ignore")
+```
+
+Initialize Anthropic prompt caching middleware.
+
+**Arguments**:
+
+- `cache_system_prompt` - Whether to cache the system prompt (default: True)
+- `cache_tools` - Whether to cache tool definitions (default: True)
+- `min_cache_length` - Minimum content length to cache (default: 1024 chars)
+- `unsupported_model_behavior` - What to do for non-Anthropic models:
+  - "ignore": Silently skip caching
+  - "warn": Log a warning and skip caching
+
+<a id="spoon_ai.middleware.prompt_caching.AnthropicPromptCachingMiddleware.awrap_model_call"></a>
+
+#### `awrap_model_call`
+
+```python
+async def awrap_model_call(request: ModelRequest,
+                           handler: Callable) -> ModelResponse
+```
+
+Add cache control markers before model call.
+
+<a id="spoon_ai.middleware.prompt_caching.AnthropicPromptCachingMiddleware.get_stats"></a>
+
+#### `get_stats`
+
+```python
+def get_stats() -> Dict[str, int]
+```
+
+Get caching statistics.
+
+<a id="spoon_ai.middleware.prompt_caching.create_prompt_caching_middleware"></a>
+
+#### `create_prompt_caching_middleware`
+
+```python
+def create_prompt_caching_middleware(
+    cache_system_prompt: bool = True,
+    cache_tools: bool = True,
+    min_cache_length: int = MIN_CACHE_LENGTH,
+    unsupported_model_behavior: Literal["ignore", "warn"] = "ignore"
+) -> AnthropicPromptCachingMiddleware
+```
+
+Create an Anthropic prompt caching middleware.
+
+**Arguments**:
+
+- `cache_system_prompt` - Whether to cache system prompts
+- `cache_tools` - Whether to cache tool definitions
+- `min_cache_length` - Minimum content length to cache
+- `unsupported_model_behavior` - How to handle non-Anthropic models
+  
+
+**Returns**:
+
+  Configured AnthropicPromptCachingMiddleware
 
 <a id="spoon_ai.middleware.todolist"></a>
 
@@ -1232,404 +1232,6 @@ Create a planning middleware with common settings.
 **Returns**:
 
   Configured PlanningMiddleware
-
-<a id="spoon_ai.middleware.summarization"></a>
-
-# Module `spoon_ai.middleware.summarization`
-
-Summarization Middleware - Context Compression for Long Conversations.
-
-Automatically summarizes conversation history when token limits are approached,
-preserving recent messages and maintaining context continuity by ensuring
-AI/Tool message pairs remain together.
-
-Compatible with LangChain DeepAgents SummarizationMiddleware interface.
-
-Usage:
-    from spoon_ai.middleware.summarization import SummarizationMiddleware
-
-    agent = ToolCallAgent(
-        middleware=[SummarizationMiddleware(
-            model=llm,
-            trigger=("fraction", 0.85),  # Trigger at 85% of max tokens
-            keep=("messages", 20),       # Keep last 20 messages
-        )],
-        ...
-    )
-
-<a id="spoon_ai.middleware.summarization.ContextFraction"></a>
-
-#### `ContextFraction`
-
-Fraction of model's maximum input tokens.
-
-**Example**:
-
-  To specify 50% of the model's max input tokens:
-    ```python
-    ("fraction", 0.5)
-    ```
-
-<a id="spoon_ai.middleware.summarization.ContextTokens"></a>
-
-#### `ContextTokens`
-
-Absolute number of tokens.
-
-**Example**:
-
-  To specify 3000 tokens:
-    ```python
-    ("tokens", 3000)
-    ```
-
-<a id="spoon_ai.middleware.summarization.ContextMessages"></a>
-
-#### `ContextMessages`
-
-Absolute number of messages.
-
-**Example**:
-
-  To specify 50 messages:
-    ```python
-    ("messages", 50)
-    ```
-
-<a id="spoon_ai.middleware.summarization.ContextSize"></a>
-
-#### `ContextSize`
-
-Union type for context size specifications.
-
-Can be either:
-- ContextFraction: A fraction of the model's maximum input tokens.
-- ContextTokens: An absolute number of tokens.
-- ContextMessages: An absolute number of messages.
-
-Depending on use with `trigger` or `keep` parameters, this type indicates either
-when to trigger summarization or how much context to retain.
-
-**Example**:
-
-    ```python
-    # ContextFraction
-    context_size: ContextSize = ("fraction", 0.5)
-
-    # ContextTokens
-    context_size: ContextSize = ("tokens", 3000)
-
-    # ContextMessages
-    context_size: ContextSize = ("messages", 50)
-    ```
-
-<a id="spoon_ai.middleware.summarization.count_tokens_approximately"></a>
-
-#### `count_tokens_approximately`
-
-```python
-def count_tokens_approximately(messages: Iterable[Message],
-                               chars_per_token: float = 4.0) -> int
-```
-
-Approximate token counter aligned with LangChain semantics.
-
-**Arguments**:
-
-- `messages` - Iterable of messages to count tokens for.
-- `chars_per_token` - Characters per token ratio (default: 4.0).
-  
-
-**Returns**:
-
-  Estimated token count.
-
-<a id="spoon_ai.middleware.summarization.RemoveMessage"></a>
-
-## `RemoveMessage` Objects
-
-```python
-class RemoveMessage()
-```
-
-Marker class indicating a message should be removed.
-
-Compatible with LangChain's RemoveMessage pattern.
-
-<a id="spoon_ai.middleware.summarization.SummarizationMiddleware"></a>
-
-## `SummarizationMiddleware` Objects
-
-```python
-class SummarizationMiddleware(AgentMiddleware)
-```
-
-Summarizes conversation history when token limits are approached.
-
-This middleware monitors message token counts and automatically summarizes older
-messages when a threshold is reached, preserving recent messages and maintaining
-context continuity by ensuring AI/Tool message pairs remain together.
-
-Compatible with LangChain DeepAgents SummarizationMiddleware interface.
-
-**Example**:
-
-    ```python
-    from spoon_ai.middleware.summarization import SummarizationMiddleware
-
-    # Basic usage with fraction trigger
-    middleware = SummarizationMiddleware(
-        model=llm,
-        trigger=("fraction", 0.85),
-        keep=("messages", 20),
-    )
-
-    # With multiple trigger conditions
-    middleware = SummarizationMiddleware(
-        model=llm,
-        trigger=[("fraction", 0.8), ("messages", 100)],
-        keep=("tokens", 3000),
-    )
-
-    agent = ToolCallAgent(
-        middleware=[middleware],
-        ...
-    )
-    ```
-
-<a id="spoon_ai.middleware.summarization.SummarizationMiddleware.__init__"></a>
-
-#### `__init__`
-
-```python
-def __init__(
-        model: Optional[ChatBot] = None,
-        *,
-        trigger: Optional[Union[ContextSize, List[ContextSize]]] = None,
-        keep: ContextSize = ("messages", _DEFAULT_MESSAGES_TO_KEEP),
-        token_counter: Optional[TokenCounter] = None,
-        summary_prompt: str = DEFAULT_SUMMARY_PROMPT,
-        trim_tokens_to_summarize: Optional[int] = _DEFAULT_TRIM_TOKEN_LIMIT,
-        max_context_tokens: Optional[int] = None,
-        **deprecated_kwargs: Any) -> None
-```
-
-Initialize summarization middleware.
-
-**Arguments**:
-
-- `model` - The language model to use for generating summaries.
-  If None, uses agent's LLM.
-- `trigger` - One or more thresholds that trigger summarization.
-  Provide a single ContextSize tuple or a list of tuples.
-  Summarization runs when any threshold is met.
-  
-
-**Examples**:
-
-- `-` _"messages", 50_ - Trigger at 50 messages
-- `-` _"tokens", 3000_ - Trigger at 3000 tokens
-- `-` _"fraction", 0.8_ - Trigger at 80% of max input tokens
-  - [("fraction", 0.8), ("messages", 100)]: Multiple conditions
-  
-- `keep` - Context retention policy applied after summarization.
-  Provide a ContextSize tuple to specify how much history to preserve.
-  Defaults to keeping the most recent 20 messages.
-  
-
-**Examples**:
-
-- `-` _"messages", 20_ - Keep last 20 messages
-- `-` _"tokens", 3000_ - Keep last 3000 tokens worth
-- `-` _"fraction", 0.3_ - Keep last 30% of max input tokens
-  
-- `token_counter` - Function to count tokens in messages.
-  Defaults to model-aware approximate counter.
-- `summary_prompt` - Prompt template for generating summaries.
-- `trim_tokens_to_summarize` - Maximum tokens to keep when preparing
-  messages for summarization. Pass None to skip trimming.
-- `max_context_tokens` - Maximum context tokens for fraction calculations.
-  If None, attempts to get from model profile.
-
-<a id="spoon_ai.middleware.summarization.SummarizationMiddleware.awrap_model_call"></a>
-
-#### `awrap_model_call`
-
-```python
-async def awrap_model_call(request: ModelRequest,
-                           handler: Callable) -> ModelResponse
-```
-
-Process messages before model call, potentially triggering summarization.
-
-<a id="spoon_ai.middleware.summarization.SummarizationMiddleware.get_stats"></a>
-
-#### `get_stats`
-
-```python
-def get_stats() -> Dict[str, Any]
-```
-
-Get summarization statistics.
-
-<a id="spoon_ai.middleware.summarization.create_summarization_middleware"></a>
-
-#### `create_summarization_middleware`
-
-```python
-def create_summarization_middleware(
-        model: Optional[ChatBot] = None,
-        trigger: Optional[Union[ContextSize, List[ContextSize]]] = None,
-        keep: ContextSize = ("messages", _DEFAULT_MESSAGES_TO_KEEP),
-        max_context_tokens: Optional[int] = None,
-        **kwargs: Any) -> SummarizationMiddleware
-```
-
-Create a summarization middleware.
-
-**Arguments**:
-
-- `model` - LLM for summarization
-- `trigger` - When to trigger summarization
-- `keep` - What to keep after summarization
-- `max_context_tokens` - Maximum context tokens for fraction calculations
-- `**kwargs` - Additional arguments passed to SummarizationMiddleware
-  
-
-**Returns**:
-
-  Configured SummarizationMiddleware
-
-<a id="spoon_ai.middleware.patch_tool_calls"></a>
-
-# Module `spoon_ai.middleware.patch_tool_calls`
-
-PatchToolCalls Middleware - Fix Dangling Tool Calls.
-
-Patches message history to handle dangling tool calls that occur when:
-- HITL (Human-in-the-Loop) interrupts tool execution
-- Errors cause tool execution to be skipped
-- Agent is resumed from a checkpoint mid-execution
-
-Compatible with LangChain DeepAgents PatchToolCallsMiddleware interface.
-
-Usage:
-    from spoon_ai.middleware.patch_tool_calls import PatchToolCallsMiddleware
-
-    agent = ToolCallAgent(
-        middleware=[PatchToolCallsMiddleware()],
-        ...
-    )
-
-<a id="spoon_ai.middleware.patch_tool_calls.PatchToolCallsMiddleware"></a>
-
-## `PatchToolCallsMiddleware` Objects
-
-```python
-class PatchToolCallsMiddleware(AgentMiddleware)
-```
-
-Middleware to patch dangling tool calls in message history.
-
-A "dangling tool call" occurs when an AI message contains tool_calls
-but there's no corresponding tool response message. This violates
-the OpenAI/Anthropic API requirements and causes errors.
-
-This middleware:
-1. Scans message history for AI messages with tool_calls
-2. Checks if each tool call has a corresponding tool response
-3. Injects synthetic tool response messages for any missing ones
-
-Common causes of dangling tool calls:
-- HITL approval flow rejects or edits a tool call
-- Error during tool execution before response is added
-- Agent resumed from checkpoint mid-execution
-- Network timeout during tool execution
-
-**Example**:
-
-    ```python
-    from spoon_ai.middleware.patch_tool_calls import PatchToolCallsMiddleware
-
-    middleware = PatchToolCallsMiddleware()
-
-    agent = ToolCallAgent(
-        middleware=[middleware],
-        ...
-    )
-    ```
-
-<a id="spoon_ai.middleware.patch_tool_calls.PatchToolCallsMiddleware.__init__"></a>
-
-#### `__init__`
-
-```python
-def __init__(cancelled_message_template: Optional[str] = None,
-             log_patches: bool = True)
-```
-
-Initialize PatchToolCalls middleware.
-
-**Arguments**:
-
-- `cancelled_message_template` - Custom message template for cancelled tools.
-  Must contain &#123;tool_name&#125; and &#123;tool_call_id&#125; placeholders.
-- `log_patches` - Whether to log when patches are applied (default: True)
-
-<a id="spoon_ai.middleware.patch_tool_calls.PatchToolCallsMiddleware.before_agent"></a>
-
-#### `before_agent`
-
-```python
-def before_agent(state: Dict[str, Any],
-                 runtime: AgentRuntime) -> Optional[Dict[str, Any]]
-```
-
-Patch dangling tool calls when agent starts.
-
-This handles cases where agent is resumed from a checkpoint
-with incomplete tool execution.
-
-<a id="spoon_ai.middleware.patch_tool_calls.PatchToolCallsMiddleware.awrap_model_call"></a>
-
-#### `awrap_model_call`
-
-```python
-async def awrap_model_call(request: ModelRequest,
-                           handler: Callable) -> ModelResponse
-```
-
-Patch dangling tool calls before model call.
-
-<a id="spoon_ai.middleware.patch_tool_calls.PatchToolCallsMiddleware.get_stats"></a>
-
-#### `get_stats`
-
-```python
-def get_stats() -> Dict[str, int]
-```
-
-Get patching statistics.
-
-<a id="spoon_ai.middleware.patch_tool_calls.create_patch_tool_calls_middleware"></a>
-
-#### `create_patch_tool_calls_middleware`
-
-```python
-def create_patch_tool_calls_middleware(
-        log_patches: bool = True) -> PatchToolCallsMiddleware
-```
-
-Create a PatchToolCalls middleware.
-
-**Arguments**:
-
-- `log_patches` - Whether to log when patches are applied
-  
-
-**Returns**:
-
-  Configured PatchToolCallsMiddleware
 
 <a id="spoon_ai.middleware.base"></a>
 
@@ -2528,4 +2130,402 @@ Create middleware pipeline from middleware classes or instances.
   FilesystemMiddleware(),
   SummarizationMiddleware(),
   ])
+
+<a id="spoon_ai.middleware.summarization"></a>
+
+# Module `spoon_ai.middleware.summarization`
+
+Summarization Middleware - Context Compression for Long Conversations.
+
+Automatically summarizes conversation history when token limits are approached,
+preserving recent messages and maintaining context continuity by ensuring
+AI/Tool message pairs remain together.
+
+Compatible with LangChain DeepAgents SummarizationMiddleware interface.
+
+Usage:
+    from spoon_ai.middleware.summarization import SummarizationMiddleware
+
+    agent = ToolCallAgent(
+        middleware=[SummarizationMiddleware(
+            model=llm,
+            trigger=("fraction", 0.85),  # Trigger at 85% of max tokens
+            keep=("messages", 20),       # Keep last 20 messages
+        )],
+        ...
+    )
+
+<a id="spoon_ai.middleware.summarization.ContextFraction"></a>
+
+#### `ContextFraction`
+
+Fraction of model's maximum input tokens.
+
+**Example**:
+
+  To specify 50% of the model's max input tokens:
+    ```python
+    ("fraction", 0.5)
+    ```
+
+<a id="spoon_ai.middleware.summarization.ContextTokens"></a>
+
+#### `ContextTokens`
+
+Absolute number of tokens.
+
+**Example**:
+
+  To specify 3000 tokens:
+    ```python
+    ("tokens", 3000)
+    ```
+
+<a id="spoon_ai.middleware.summarization.ContextMessages"></a>
+
+#### `ContextMessages`
+
+Absolute number of messages.
+
+**Example**:
+
+  To specify 50 messages:
+    ```python
+    ("messages", 50)
+    ```
+
+<a id="spoon_ai.middleware.summarization.ContextSize"></a>
+
+#### `ContextSize`
+
+Union type for context size specifications.
+
+Can be either:
+- ContextFraction: A fraction of the model's maximum input tokens.
+- ContextTokens: An absolute number of tokens.
+- ContextMessages: An absolute number of messages.
+
+Depending on use with `trigger` or `keep` parameters, this type indicates either
+when to trigger summarization or how much context to retain.
+
+**Example**:
+
+    ```python
+    # ContextFraction
+    context_size: ContextSize = ("fraction", 0.5)
+
+    # ContextTokens
+    context_size: ContextSize = ("tokens", 3000)
+
+    # ContextMessages
+    context_size: ContextSize = ("messages", 50)
+    ```
+
+<a id="spoon_ai.middleware.summarization.count_tokens_approximately"></a>
+
+#### `count_tokens_approximately`
+
+```python
+def count_tokens_approximately(messages: Iterable[Message],
+                               chars_per_token: float = 4.0) -> int
+```
+
+Approximate token counter aligned with LangChain semantics.
+
+**Arguments**:
+
+- `messages` - Iterable of messages to count tokens for.
+- `chars_per_token` - Characters per token ratio (default: 4.0).
+  
+
+**Returns**:
+
+  Estimated token count.
+
+<a id="spoon_ai.middleware.summarization.RemoveMessage"></a>
+
+## `RemoveMessage` Objects
+
+```python
+class RemoveMessage()
+```
+
+Marker class indicating a message should be removed.
+
+Compatible with LangChain's RemoveMessage pattern.
+
+<a id="spoon_ai.middleware.summarization.SummarizationMiddleware"></a>
+
+## `SummarizationMiddleware` Objects
+
+```python
+class SummarizationMiddleware(AgentMiddleware)
+```
+
+Summarizes conversation history when token limits are approached.
+
+This middleware monitors message token counts and automatically summarizes older
+messages when a threshold is reached, preserving recent messages and maintaining
+context continuity by ensuring AI/Tool message pairs remain together.
+
+Compatible with LangChain DeepAgents SummarizationMiddleware interface.
+
+**Example**:
+
+    ```python
+    from spoon_ai.middleware.summarization import SummarizationMiddleware
+
+    # Basic usage with fraction trigger
+    middleware = SummarizationMiddleware(
+        model=llm,
+        trigger=("fraction", 0.85),
+        keep=("messages", 20),
+    )
+
+    # With multiple trigger conditions
+    middleware = SummarizationMiddleware(
+        model=llm,
+        trigger=[("fraction", 0.8), ("messages", 100)],
+        keep=("tokens", 3000),
+    )
+
+    agent = ToolCallAgent(
+        middleware=[middleware],
+        ...
+    )
+    ```
+
+<a id="spoon_ai.middleware.summarization.SummarizationMiddleware.__init__"></a>
+
+#### `__init__`
+
+```python
+def __init__(
+        model: Optional[ChatBot] = None,
+        *,
+        trigger: Optional[Union[ContextSize, List[ContextSize]]] = None,
+        keep: ContextSize = ("messages", _DEFAULT_MESSAGES_TO_KEEP),
+        token_counter: Optional[TokenCounter] = None,
+        summary_prompt: str = DEFAULT_SUMMARY_PROMPT,
+        trim_tokens_to_summarize: Optional[int] = _DEFAULT_TRIM_TOKEN_LIMIT,
+        max_context_tokens: Optional[int] = None,
+        **deprecated_kwargs: Any) -> None
+```
+
+Initialize summarization middleware.
+
+**Arguments**:
+
+- `model` - The language model to use for generating summaries.
+  If None, uses agent's LLM.
+- `trigger` - One or more thresholds that trigger summarization.
+  Provide a single ContextSize tuple or a list of tuples.
+  Summarization runs when any threshold is met.
+  
+
+**Examples**:
+
+- `-` _"messages", 50_ - Trigger at 50 messages
+- `-` _"tokens", 3000_ - Trigger at 3000 tokens
+- `-` _"fraction", 0.8_ - Trigger at 80% of max input tokens
+  - [("fraction", 0.8), ("messages", 100)]: Multiple conditions
+  
+- `keep` - Context retention policy applied after summarization.
+  Provide a ContextSize tuple to specify how much history to preserve.
+  Defaults to keeping the most recent 20 messages.
+  
+
+**Examples**:
+
+- `-` _"messages", 20_ - Keep last 20 messages
+- `-` _"tokens", 3000_ - Keep last 3000 tokens worth
+- `-` _"fraction", 0.3_ - Keep last 30% of max input tokens
+  
+- `token_counter` - Function to count tokens in messages.
+  Defaults to model-aware approximate counter.
+- `summary_prompt` - Prompt template for generating summaries.
+- `trim_tokens_to_summarize` - Maximum tokens to keep when preparing
+  messages for summarization. Pass None to skip trimming.
+- `max_context_tokens` - Maximum context tokens for fraction calculations.
+  If None, attempts to get from model profile.
+
+<a id="spoon_ai.middleware.summarization.SummarizationMiddleware.awrap_model_call"></a>
+
+#### `awrap_model_call`
+
+```python
+async def awrap_model_call(request: ModelRequest,
+                           handler: Callable) -> ModelResponse
+```
+
+Process messages before model call, potentially triggering summarization.
+
+<a id="spoon_ai.middleware.summarization.SummarizationMiddleware.get_stats"></a>
+
+#### `get_stats`
+
+```python
+def get_stats() -> Dict[str, Any]
+```
+
+Get summarization statistics.
+
+<a id="spoon_ai.middleware.summarization.create_summarization_middleware"></a>
+
+#### `create_summarization_middleware`
+
+```python
+def create_summarization_middleware(
+        model: Optional[ChatBot] = None,
+        trigger: Optional[Union[ContextSize, List[ContextSize]]] = None,
+        keep: ContextSize = ("messages", _DEFAULT_MESSAGES_TO_KEEP),
+        max_context_tokens: Optional[int] = None,
+        **kwargs: Any) -> SummarizationMiddleware
+```
+
+Create a summarization middleware.
+
+**Arguments**:
+
+- `model` - LLM for summarization
+- `trigger` - When to trigger summarization
+- `keep` - What to keep after summarization
+- `max_context_tokens` - Maximum context tokens for fraction calculations
+- `**kwargs` - Additional arguments passed to SummarizationMiddleware
+  
+
+**Returns**:
+
+  Configured SummarizationMiddleware
+
+<a id="spoon_ai.middleware.patch_tool_calls"></a>
+
+# Module `spoon_ai.middleware.patch_tool_calls`
+
+PatchToolCalls Middleware - Fix Dangling Tool Calls.
+
+Patches message history to handle dangling tool calls that occur when:
+- HITL (Human-in-the-Loop) interrupts tool execution
+- Errors cause tool execution to be skipped
+- Agent is resumed from a checkpoint mid-execution
+
+Compatible with LangChain DeepAgents PatchToolCallsMiddleware interface.
+
+Usage:
+    from spoon_ai.middleware.patch_tool_calls import PatchToolCallsMiddleware
+
+    agent = ToolCallAgent(
+        middleware=[PatchToolCallsMiddleware()],
+        ...
+    )
+
+<a id="spoon_ai.middleware.patch_tool_calls.PatchToolCallsMiddleware"></a>
+
+## `PatchToolCallsMiddleware` Objects
+
+```python
+class PatchToolCallsMiddleware(AgentMiddleware)
+```
+
+Middleware to patch dangling tool calls in message history.
+
+A "dangling tool call" occurs when an AI message contains tool_calls
+but there's no corresponding tool response message. This violates
+the OpenAI/Anthropic API requirements and causes errors.
+
+This middleware:
+1. Scans message history for AI messages with tool_calls
+2. Checks if each tool call has a corresponding tool response
+3. Injects synthetic tool response messages for any missing ones
+
+Common causes of dangling tool calls:
+- HITL approval flow rejects or edits a tool call
+- Error during tool execution before response is added
+- Agent resumed from checkpoint mid-execution
+- Network timeout during tool execution
+
+**Example**:
+
+    ```python
+    from spoon_ai.middleware.patch_tool_calls import PatchToolCallsMiddleware
+
+    middleware = PatchToolCallsMiddleware()
+
+    agent = ToolCallAgent(
+        middleware=[middleware],
+        ...
+    )
+    ```
+
+<a id="spoon_ai.middleware.patch_tool_calls.PatchToolCallsMiddleware.__init__"></a>
+
+#### `__init__`
+
+```python
+def __init__(cancelled_message_template: Optional[str] = None,
+             log_patches: bool = True)
+```
+
+Initialize PatchToolCalls middleware.
+
+**Arguments**:
+
+- `cancelled_message_template` - Custom message template for cancelled tools.
+  Must contain &#123;tool_name&#125; and &#123;tool_call_id&#125; placeholders.
+- `log_patches` - Whether to log when patches are applied (default: True)
+
+<a id="spoon_ai.middleware.patch_tool_calls.PatchToolCallsMiddleware.before_agent"></a>
+
+#### `before_agent`
+
+```python
+def before_agent(state: Dict[str, Any],
+                 runtime: AgentRuntime) -> Optional[Dict[str, Any]]
+```
+
+Patch dangling tool calls when agent starts.
+
+This handles cases where agent is resumed from a checkpoint
+with incomplete tool execution.
+
+<a id="spoon_ai.middleware.patch_tool_calls.PatchToolCallsMiddleware.awrap_model_call"></a>
+
+#### `awrap_model_call`
+
+```python
+async def awrap_model_call(request: ModelRequest,
+                           handler: Callable) -> ModelResponse
+```
+
+Patch dangling tool calls before model call.
+
+<a id="spoon_ai.middleware.patch_tool_calls.PatchToolCallsMiddleware.get_stats"></a>
+
+#### `get_stats`
+
+```python
+def get_stats() -> Dict[str, int]
+```
+
+Get patching statistics.
+
+<a id="spoon_ai.middleware.patch_tool_calls.create_patch_tool_calls_middleware"></a>
+
+#### `create_patch_tool_calls_middleware`
+
+```python
+def create_patch_tool_calls_middleware(
+        log_patches: bool = True) -> PatchToolCallsMiddleware
+```
+
+Create a PatchToolCalls middleware.
+
+**Arguments**:
+
+- `log_patches` - Whether to log when patches are applied
+  
+
+**Returns**:
+
+  Configured PatchToolCallsMiddleware
 
