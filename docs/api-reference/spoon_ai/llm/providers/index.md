@@ -7,6 +7,9 @@ title: spoon_ai.llm.providers
 # Table of Contents
 
 * [spoon\_ai.llm.providers](#spoon_ai.llm.providers)
+* [spoon\_ai.llm.providers.deepseek\_provider](#spoon_ai.llm.providers.deepseek_provider)
+  * [DeepSeekProvider](#spoon_ai.llm.providers.deepseek_provider.DeepSeekProvider)
+    * [get\_metadata](#spoon_ai.llm.providers.deepseek_provider.DeepSeekProvider.get_metadata)
 * [spoon\_ai.llm.providers.anthropic\_provider](#spoon_ai.llm.providers.anthropic_provider)
   * [AnthropicProvider](#spoon_ai.llm.providers.anthropic_provider.AnthropicProvider)
     * [initialize](#spoon_ai.llm.providers.anthropic_provider.AnthropicProvider.initialize)
@@ -18,6 +21,9 @@ title: spoon_ai.llm.providers
     * [get\_metadata](#spoon_ai.llm.providers.anthropic_provider.AnthropicProvider.get_metadata)
     * [health\_check](#spoon_ai.llm.providers.anthropic_provider.AnthropicProvider.health_check)
     * [cleanup](#spoon_ai.llm.providers.anthropic_provider.AnthropicProvider.cleanup)
+* [spoon\_ai.llm.providers.openai\_provider](#spoon_ai.llm.providers.openai_provider)
+  * [OpenAIProvider](#spoon_ai.llm.providers.openai_provider.OpenAIProvider)
+    * [get\_metadata](#spoon_ai.llm.providers.openai_provider.OpenAIProvider.get_metadata)
 * [spoon\_ai.llm.providers.gemini\_provider](#spoon_ai.llm.providers.gemini_provider)
   * [GeminiProvider](#spoon_ai.llm.providers.gemini_provider.GeminiProvider)
     * [initialize](#spoon_ai.llm.providers.gemini_provider.GeminiProvider.initialize)
@@ -32,9 +38,8 @@ title: spoon_ai.llm.providers
   * [OpenRouterProvider](#spoon_ai.llm.providers.openrouter_provider.OpenRouterProvider)
     * [get\_additional\_headers](#spoon_ai.llm.providers.openrouter_provider.OpenRouterProvider.get_additional_headers)
     * [get\_metadata](#spoon_ai.llm.providers.openrouter_provider.OpenRouterProvider.get_metadata)
-* [spoon\_ai.llm.providers.deepseek\_provider](#spoon_ai.llm.providers.deepseek_provider)
-  * [DeepSeekProvider](#spoon_ai.llm.providers.deepseek_provider.DeepSeekProvider)
-    * [get\_metadata](#spoon_ai.llm.providers.deepseek_provider.DeepSeekProvider.get_metadata)
+* [spoon\_ai.llm.providers.ollama\_provider](#spoon_ai.llm.providers.ollama_provider)
+  * [OllamaProvider](#spoon_ai.llm.providers.ollama_provider.OllamaProvider)
 * [spoon\_ai.llm.providers.openai\_compatible\_provider](#spoon_ai.llm.providers.openai_compatible_provider)
   * [MAX\_INLINE\_FILE\_SIZE](#spoon_ai.llm.providers.openai_compatible_provider.MAX_INLINE_FILE_SIZE)
   * [OpenAICompatibleProvider](#spoon_ai.llm.providers.openai_compatible_provider.OpenAICompatibleProvider)
@@ -50,17 +55,45 @@ title: spoon_ai.llm.providers
     * [get\_metadata](#spoon_ai.llm.providers.openai_compatible_provider.OpenAICompatibleProvider.get_metadata)
     * [health\_check](#spoon_ai.llm.providers.openai_compatible_provider.OpenAICompatibleProvider.health_check)
     * [cleanup](#spoon_ai.llm.providers.openai_compatible_provider.OpenAICompatibleProvider.cleanup)
-* [spoon\_ai.llm.providers.openai\_provider](#spoon_ai.llm.providers.openai_provider)
-  * [OpenAIProvider](#spoon_ai.llm.providers.openai_provider.OpenAIProvider)
-    * [get\_metadata](#spoon_ai.llm.providers.openai_provider.OpenAIProvider.get_metadata)
-* [spoon\_ai.llm.providers.ollama\_provider](#spoon_ai.llm.providers.ollama_provider)
-  * [OllamaProvider](#spoon_ai.llm.providers.ollama_provider.OllamaProvider)
 
 <a id="spoon_ai.llm.providers"></a>
 
 # Module `spoon_ai.llm.providers`
 
 LLM Provider implementations.
+
+<a id="spoon_ai.llm.providers.deepseek_provider"></a>
+
+# Module `spoon_ai.llm.providers.deepseek_provider`
+
+DeepSeek Provider implementation for the unified LLM interface.
+DeepSeek provides access to their models through an OpenAI-compatible API.
+
+<a id="spoon_ai.llm.providers.deepseek_provider.DeepSeekProvider"></a>
+
+## `DeepSeekProvider` Objects
+
+```python
+@register_provider("deepseek", [
+    ProviderCapability.CHAT,
+    ProviderCapability.COMPLETION,
+    ProviderCapability.TOOLS,
+    ProviderCapability.STREAMING
+])
+class DeepSeekProvider(OpenAICompatibleProvider)
+```
+
+DeepSeek provider implementation using OpenAI-compatible API.
+
+<a id="spoon_ai.llm.providers.deepseek_provider.DeepSeekProvider.get_metadata"></a>
+
+#### `get_metadata`
+
+```python
+def get_metadata() -> ProviderMetadata
+```
+
+Get DeepSeek provider metadata.
 
 <a id="spoon_ai.llm.providers.anthropic_provider"></a>
 
@@ -180,6 +213,38 @@ async def cleanup() -> None
 ```
 
 Cleanup Anthropic provider resources.
+
+<a id="spoon_ai.llm.providers.openai_provider"></a>
+
+# Module `spoon_ai.llm.providers.openai_provider`
+
+OpenAI Provider implementation for the unified LLM interface.
+
+<a id="spoon_ai.llm.providers.openai_provider.OpenAIProvider"></a>
+
+## `OpenAIProvider` Objects
+
+```python
+@register_provider("openai", [
+    ProviderCapability.CHAT,
+    ProviderCapability.COMPLETION,
+    ProviderCapability.TOOLS,
+    ProviderCapability.STREAMING
+])
+class OpenAIProvider(OpenAICompatibleProvider)
+```
+
+OpenAI provider implementation.
+
+<a id="spoon_ai.llm.providers.openai_provider.OpenAIProvider.get_metadata"></a>
+
+#### `get_metadata`
+
+```python
+def get_metadata() -> ProviderMetadata
+```
+
+Get OpenAI provider metadata.
 
 <a id="spoon_ai.llm.providers.gemini_provider"></a>
 
@@ -335,38 +400,39 @@ def get_metadata() -> ProviderMetadata
 
 Get OpenRouter provider metadata.
 
-<a id="spoon_ai.llm.providers.deepseek_provider"></a>
+<a id="spoon_ai.llm.providers.ollama_provider"></a>
 
-# Module `spoon_ai.llm.providers.deepseek_provider`
+# Module `spoon_ai.llm.providers.ollama_provider`
 
-DeepSeek Provider implementation for the unified LLM interface.
-DeepSeek provides access to their models through an OpenAI-compatible API.
+Ollama Provider implementation for the unified LLM interface.
 
-<a id="spoon_ai.llm.providers.deepseek_provider.DeepSeekProvider"></a>
+Ollama runs locally and exposes an HTTP API (default: http://localhost:11434).
+This provider supports chat, completion, and streaming.
 
-## `DeepSeekProvider` Objects
+**Notes**:
 
-```python
-@register_provider("deepseek", [
-    ProviderCapability.CHAT,
-    ProviderCapability.COMPLETION,
-    ProviderCapability.TOOLS,
-    ProviderCapability.STREAMING
-])
-class DeepSeekProvider(OpenAICompatibleProvider)
-```
+  - Ollama does not require an API key; the configuration layer may still provide
+  a placeholder api_key value for consistency.
+  - Tool calling is supported via /api/chat (tools + tool_calls).
 
-DeepSeek provider implementation using OpenAI-compatible API.
+<a id="spoon_ai.llm.providers.ollama_provider.OllamaProvider"></a>
 
-<a id="spoon_ai.llm.providers.deepseek_provider.DeepSeekProvider.get_metadata"></a>
-
-#### `get_metadata`
+## `OllamaProvider` Objects
 
 ```python
-def get_metadata() -> ProviderMetadata
+@register_provider(
+    "ollama",
+    [
+        ProviderCapability.CHAT,
+        ProviderCapability.COMPLETION,
+        ProviderCapability.TOOLS,
+        ProviderCapability.STREAMING,
+    ],
+)
+class OllamaProvider(LLMProviderInterface)
 ```
 
-Get DeepSeek provider metadata.
+Local Ollama provider via HTTP.
 
 <a id="spoon_ai.llm.providers.openai_compatible_provider"></a>
 
@@ -517,70 +583,4 @@ async def cleanup() -> None
 ```
 
 Cleanup provider resources.
-
-<a id="spoon_ai.llm.providers.openai_provider"></a>
-
-# Module `spoon_ai.llm.providers.openai_provider`
-
-OpenAI Provider implementation for the unified LLM interface.
-
-<a id="spoon_ai.llm.providers.openai_provider.OpenAIProvider"></a>
-
-## `OpenAIProvider` Objects
-
-```python
-@register_provider("openai", [
-    ProviderCapability.CHAT,
-    ProviderCapability.COMPLETION,
-    ProviderCapability.TOOLS,
-    ProviderCapability.STREAMING
-])
-class OpenAIProvider(OpenAICompatibleProvider)
-```
-
-OpenAI provider implementation.
-
-<a id="spoon_ai.llm.providers.openai_provider.OpenAIProvider.get_metadata"></a>
-
-#### `get_metadata`
-
-```python
-def get_metadata() -> ProviderMetadata
-```
-
-Get OpenAI provider metadata.
-
-<a id="spoon_ai.llm.providers.ollama_provider"></a>
-
-# Module `spoon_ai.llm.providers.ollama_provider`
-
-Ollama Provider implementation for the unified LLM interface.
-
-Ollama runs locally and exposes an HTTP API (default: http://localhost:11434).
-This provider supports chat, completion, and streaming.
-
-**Notes**:
-
-  - Ollama does not require an API key; the configuration layer may still provide
-  a placeholder api_key value for consistency.
-  - Tool calling is supported via /api/chat (tools + tool_calls).
-
-<a id="spoon_ai.llm.providers.ollama_provider.OllamaProvider"></a>
-
-## `OllamaProvider` Objects
-
-```python
-@register_provider(
-    "ollama",
-    [
-        ProviderCapability.CHAT,
-        ProviderCapability.COMPLETION,
-        ProviderCapability.TOOLS,
-        ProviderCapability.STREAMING,
-    ],
-)
-class OllamaProvider(LLMProviderInterface)
-```
-
-Local Ollama provider via HTTP.
 

@@ -18,6 +18,7 @@ title: spoon_ai.wallet
     * [wipe](#spoon_ai.wallet.vault.SecretVault.wipe)
     * [wipe\_all](#spoon_ai.wallet.vault.SecretVault.wipe_all)
   * [get\_vault](#spoon_ai.wallet.vault.get_vault)
+* [spoon\_ai.wallet.encrypt\_key](#spoon_ai.wallet.encrypt_key)
 * [spoon\_ai.wallet.security](#spoon_ai.wallet.security)
   * [ENCRYPTED\_PREFIX\_V2](#spoon_ai.wallet.security.ENCRYPTED_PREFIX_V2)
   * [ENCRYPTED\_PREFIX](#spoon_ai.wallet.security.ENCRYPTED_PREFIX)
@@ -25,7 +26,6 @@ title: spoon_ai.wallet
   * [encrypt\_private\_key](#spoon_ai.wallet.security.encrypt_private_key)
   * [decrypt\_private\_key](#spoon_ai.wallet.security.decrypt_private_key)
   * [decrypt\_and\_store](#spoon_ai.wallet.security.decrypt_and_store)
-* [spoon\_ai.wallet.encrypt\_key](#spoon_ai.wallet.encrypt_key)
 
 <a id="spoon_ai.wallet"></a>
 
@@ -250,6 +250,14 @@ def get_vault() -> SecretVault
 
 Get the singleton SecretVault instance.
 
+<a id="spoon_ai.wallet.encrypt_key"></a>
+
+# Module `spoon_ai.wallet.encrypt_key`
+
+Interactive helper to produce ENC:v2 payloads for PRIVATE_KEY (or any secret).
+
+Uses AES-256-GCM encryption with Argon2id key derivation.
+
 <a id="spoon_ai.wallet.security"></a>
 
 # Module `spoon_ai.wallet.security`
@@ -394,12 +402,4 @@ this function:
   
   # On shutdown:
   vault.wipe_all()
-
-<a id="spoon_ai.wallet.encrypt_key"></a>
-
-# Module `spoon_ai.wallet.encrypt_key`
-
-Interactive helper to produce ENC:v2 payloads for PRIVATE_KEY (or any secret).
-
-Uses AES-256-GCM encryption with Argon2id key derivation.
 
