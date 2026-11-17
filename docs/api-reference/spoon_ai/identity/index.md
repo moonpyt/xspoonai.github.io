@@ -7,17 +7,13 @@ title: spoon_ai.identity
 # Table of Contents
 
 * [spoon\_ai.identity](#spoon_ai.identity)
-* [spoon\_ai.identity.did\_resolver](#spoon_ai.identity.did_resolver)
-  * [DIDResolver](#spoon_ai.identity.did_resolver.DIDResolver)
-    * [resolve](#spoon_ai.identity.did_resolver.DIDResolver.resolve)
-    * [resolve\_metadata\_only](#spoon_ai.identity.did_resolver.DIDResolver.resolve_metadata_only)
-    * [verify\_agent](#spoon_ai.identity.did_resolver.DIDResolver.verify_agent)
 * [spoon\_ai.identity.storage\_client](#spoon_ai.identity.storage_client)
   * [DIDStorageClient](#spoon_ai.identity.storage_client.DIDStorageClient)
     * [publish\_did\_document](#spoon_ai.identity.storage_client.DIDStorageClient.publish_did_document)
     * [fetch\_did\_document](#spoon_ai.identity.storage_client.DIDStorageClient.fetch_did_document)
     * [publish\_credential](#spoon_ai.identity.storage_client.DIDStorageClient.publish_credential)
     * [close](#spoon_ai.identity.storage_client.DIDStorageClient.close)
+* [spoon\_ai.identity.erc8004\_abi](#spoon_ai.identity.erc8004_abi)
 * [spoon\_ai.identity.did\_models](#spoon_ai.identity.did_models)
   * [VerificationMethodType](#spoon_ai.identity.did_models.VerificationMethodType)
   * [ServiceType](#spoon_ai.identity.did_models.ServiceType)
@@ -45,7 +41,11 @@ title: spoon_ai.identity
     * [get\_agent\_id\_for\_address](#spoon_ai.identity.erc8004_client.ERC8004Client.get_agent_id_for_address)
     * [register\_agent](#spoon_ai.identity.erc8004_client.ERC8004Client.register_agent)
     * [resolve\_agent](#spoon_ai.identity.erc8004_client.ERC8004Client.resolve_agent)
-* [spoon\_ai.identity.erc8004\_abi](#spoon_ai.identity.erc8004_abi)
+* [spoon\_ai.identity.did\_resolver](#spoon_ai.identity.did_resolver)
+  * [DIDResolver](#spoon_ai.identity.did_resolver.DIDResolver)
+    * [resolve](#spoon_ai.identity.did_resolver.DIDResolver.resolve)
+    * [resolve\_metadata\_only](#spoon_ai.identity.did_resolver.DIDResolver.resolve_metadata_only)
+    * [verify\_agent](#spoon_ai.identity.did_resolver.DIDResolver.verify_agent)
 
 <a id="spoon_ai.identity"></a>
 
@@ -53,63 +53,6 @@ title: spoon_ai.identity
 
 SpoonOS Agent DID Identity Module
 Implements ERC-8004 compliant decentralized identity for agents
-
-<a id="spoon_ai.identity.did_resolver"></a>
-
-# Module `spoon_ai.identity.did_resolver`
-
-DID Resolver for SpoonOS Agents
-Implements unified DID resolution via IdentityRegistry with NeoFS-first policy
-
-<a id="spoon_ai.identity.did_resolver.DIDResolver"></a>
-
-## `DIDResolver` Objects
-
-```python
-class DIDResolver()
-```
-
-Unified DID resolver for SpoonOS agents.
-Resolution flow: IdentityRegistry (agentId) → NeoFS (primary) → IPFS (fallback)
-
-<a id="spoon_ai.identity.did_resolver.DIDResolver.resolve"></a>
-
-#### `resolve`
-
-```python
-def resolve(agent_id: int) -> DIDResolutionResult
-```
-
-Resolve agent identity to complete DID document.
-
-**Arguments**:
-
-- `agent_id` - On-chain agent token ID from IdentityRegistry
-  
-
-**Returns**:
-
-  DIDResolutionResult with document and metadata
-
-<a id="spoon_ai.identity.did_resolver.DIDResolver.resolve_metadata_only"></a>
-
-#### `resolve_metadata_only`
-
-```python
-def resolve_metadata_only(agent_id: int) -> Dict
-```
-
-Resolve only on-chain metadata (fast path)
-
-<a id="spoon_ai.identity.did_resolver.DIDResolver.verify_agent"></a>
-
-#### `verify_agent`
-
-```python
-def verify_agent(agent_id: int) -> bool
-```
-
-Verify agent exists and is resolvable
 
 <a id="spoon_ai.identity.storage_client"></a>
 
@@ -170,6 +113,14 @@ def close()
 ```
 
 Close HTTP clients
+
+<a id="spoon_ai.identity.erc8004_abi"></a>
+
+# Module `spoon_ai.identity.erc8004_abi`
+
+Shared ERC-8004 ABI fragments (minimal, artifact-free).
+
+These ABIs cover the common calls used by the Python SDK and demos.
 
 <a id="spoon_ai.identity.did_models"></a>
 
@@ -485,11 +436,60 @@ Resolve agent metadata from IdentityRegistry by agentId.
 
 Returns dict with owner, tokenURI, and common metadata fields.
 
-<a id="spoon_ai.identity.erc8004_abi"></a>
+<a id="spoon_ai.identity.did_resolver"></a>
 
-# Module `spoon_ai.identity.erc8004_abi`
+# Module `spoon_ai.identity.did_resolver`
 
-Shared ERC-8004 ABI fragments (minimal, artifact-free).
+DID Resolver for SpoonOS Agents
+Implements unified DID resolution via IdentityRegistry with NeoFS-first policy
 
-These ABIs cover the common calls used by the Python SDK and demos.
+<a id="spoon_ai.identity.did_resolver.DIDResolver"></a>
+
+## `DIDResolver` Objects
+
+```python
+class DIDResolver()
+```
+
+Unified DID resolver for SpoonOS agents.
+Resolution flow: IdentityRegistry (agentId) → NeoFS (primary) → IPFS (fallback)
+
+<a id="spoon_ai.identity.did_resolver.DIDResolver.resolve"></a>
+
+#### `resolve`
+
+```python
+def resolve(agent_id: int) -> DIDResolutionResult
+```
+
+Resolve agent identity to complete DID document.
+
+**Arguments**:
+
+- `agent_id` - On-chain agent token ID from IdentityRegistry
+  
+
+**Returns**:
+
+  DIDResolutionResult with document and metadata
+
+<a id="spoon_ai.identity.did_resolver.DIDResolver.resolve_metadata_only"></a>
+
+#### `resolve_metadata_only`
+
+```python
+def resolve_metadata_only(agent_id: int) -> Dict
+```
+
+Resolve only on-chain metadata (fast path)
+
+<a id="spoon_ai.identity.did_resolver.DIDResolver.verify_agent"></a>
+
+#### `verify_agent`
+
+```python
+def verify_agent(agent_id: int) -> bool
+```
+
+Verify agent exists and is resolvable
 
